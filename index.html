@@ -3,622 +3,449 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Happy Birthday — بِسْمِ اللّٰه</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<title>A Little Surprise For You \ud83c\udf38</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --emerald: #0d3d2e;
-    --emerald-mid: #145c44;
-    --gold: #c9a84c;
-    --gold-light: #f0d080;
-    --rose: #d4748a;
-    --cream: #fdf6e3;
-    --bg: #071a13;
-  }
+:root {
+  --bg: #0a0f1e;
+  --card: #111827;
+  --gold: #e2b96f;
+  --gold2: #f5d89a;
+  --rose: #e8829a;
+  --rose2: #fbb6c8;
+  --teal: #4ecdc4;
+  --cream: #fef9f0;
+  --soft: #c8d8e8;
+  --green: #2d6a4f;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Quicksand',sans-serif;background:var(--bg);}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* \u2550\u2550 STARS BG \u2550\u2550 */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-  html { scroll-behavior: smooth; }
+/* \u2550\u2550 PETALS \u2550\u2550 */
+.petal{position:fixed;top:-30px;z-index:1;pointer-events:none;animation:petalFall linear infinite;}
+@keyframes petalFall{
+  0%{transform:translateY(-30px) rotate(0deg) scale(1);opacity:1;}
+  100%{transform:translateY(105vh) rotate(540deg) scale(0.5);opacity:0;}
+}
 
-  body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: 'Lato', sans-serif;
-    overflow-x: hidden;
-    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text y='16' font-size='16'>🌸</text></svg>") 10 10, auto;
-  }
+/* \u2550\u2550 SCREEN SYSTEM \u2550\u2550 */
+.screen{
+  position:fixed;inset:0;z-index:10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.5rem;text-align:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.7s ease, transform 0.7s ease;
+  transform:translateY(30px);
+}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.screen.exit{opacity:0;transform:translateY(-40px);}
 
-  #bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.18; }
+/* \u2550\u2550 SCREEN 0 \u2014 ENVELOPE \u2550\u2550 */
+#s0{background:radial-gradient(ellipse at 50% 40%, #1a1040 0%, #0a0f1e 70%);}
+.envelope-wrap{cursor:pointer;position:relative;}
+.envelope{
+  width:180px;height:130px;position:relative;margin:0 auto 1.5rem;
+  filter:drop-shadow(0 0 30px #e2b96f88);
+  animation:envFloat 3s ease-in-out infinite;
+}
+@keyframes envFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.env-body{
+  width:180px;height:130px;background:linear-gradient(145deg,#2a1f5e,#1a1040);
+  border-radius:4px;border:2px solid var(--gold);position:relative;overflow:hidden;
+}
+.env-flap{
+  position:absolute;top:0;left:0;width:0;height:0;
+  border-left:90px solid transparent;border-right:90px solid transparent;
+  border-top:65px solid #3d2d7a;
+}
+.env-bottom{
+  position:absolute;bottom:0;left:0;width:0;height:0;
+  border-left:90px solid transparent;border-right:90px solid transparent;
+  border-bottom:65px solid #251860;
+}
+.env-left{position:absolute;top:0;left:0;width:0;height:0;border-bottom:130px solid #2e2368;border-right:90px solid transparent;}
+.env-right{position:absolute;top:0;right:0;width:0;height:0;border-bottom:130px solid #332770;border-left:90px solid transparent;}
+.env-seal{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:36px;height:36px;background:var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  box-shadow:0 0 15px #e2b96f;
+}
+.tap-hint{
+  font-family:'Amiri',serif;color:var(--gold);font-size:1rem;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.s0-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--cream);margin-bottom:0.5rem;}
+.s0-sub{font-family:'Amiri',serif;color:var(--gold);font-size:1rem;margin-bottom:2rem;}
 
-  .petal { position: fixed; top: -40px; font-size: 1.4rem; animation: fall linear infinite; z-index: 1; pointer-events: none; }
-  @keyframes fall {
-    0%   { transform: translateY(-40px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+/* \u2550\u2550 SLIDE NAV \u2550\u2550 */
+.slide-counter{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:100;display:flex;gap:8px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#ffffff22;transition:all 0.3s;}
+.dot.active{background:var(--gold);width:24px;border-radius:4px;}
 
-  .hero {
-    position: relative; z-index: 2;
-    min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 2rem;
-    background: radial-gradient(ellipse at 50% 30%, #1a5c3a55 0%, transparent 70%);
-  }
+/* \u2550\u2550 BTN \u2550\u2550 */
+.btn{
+  background:linear-gradient(135deg,var(--gold),#b8892a);
+  color:#0a0f1e;border:none;padding:0.75rem 2.2rem;
+  border-radius:30px;font-family:'Playfair Display',serif;font-size:0.95rem;
+  cursor:pointer;letter-spacing:0.05em;font-weight:700;
+  box-shadow:0 4px 20px #e2b96f44;transition:transform 0.2s,box-shadow 0.2s;
+  margin-top:1.2rem;
+}
+.btn:hover{transform:scale(1.05);box-shadow:0 6px 28px #e2b96f66;}
+.btn-ghost{
+  background:none;border:1.5px solid var(--rose);color:var(--rose);
+  padding:0.6rem 1.8rem;border-radius:30px;font-family:'Quicksand',sans-serif;
+  font-size:0.88rem;cursor:pointer;transition:all 0.2s;margin-top:0.8rem;
+}
+.btn-ghost:hover{background:var(--rose);color:#fff;}
 
-  .bismillah {
-    font-family: 'Amiri', serif;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 1s 0.2s forwards;
-  }
+/* \u2550\u2550 SLIDE CARDS \u2550\u2550 */
+.slide-card{
+  background:linear-gradient(145deg,#111827ee,#0d1525ee);
+  border:1px solid #e2b96f33;border-radius:24px;
+  padding:2rem 2rem;max-width:420px;width:100%;
+  box-shadow:0 20px 60px #00000088;
+  backdrop-filter:blur(10px);
+}
+.slide-icon{font-size:3.5rem;margin-bottom:1rem;display:block;animation:iconBounce 2s ease-in-out infinite;}
+@keyframes iconBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+.slide-title{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,4vw,1.9rem);color:var(--gold2);margin-bottom:0.8rem;line-height:1.3;}
+.slide-text{font-family:'Amiri',serif;font-size:clamp(0.95rem,2.5vw,1.1rem);color:var(--cream);line-height:1.9;margin-bottom:0.5rem;}
+.arabic-line{font-size:1.3rem;color:var(--gold);display:block;margin:0.6rem 0;}
+.divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1rem auto;}
 
-  .hero-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    color: var(--gold-light);
-    text-shadow: 0 0 40px #c9a84c88, 0 2px 8px #000;
-    line-height: 1.2;
-    opacity: 0;
-    animation: fadeUp 1s 0.5s forwards;
-  }
+/* \u2550\u2550 SCREEN 2 \u2014 RIDDLE \u2550\u2550 */
+.riddle-box{
+  background:linear-gradient(145deg,#0d1a2e,#111827);
+  border:1px solid var(--teal);border-radius:20px;
+  padding:1.8rem;max-width:400px;width:100%;
+}
+.riddle-q{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--cream);margin-bottom:1rem;font-style:italic;}
+.riddle-input{
+  width:100%;background:#0a0f1e;border:1.5px solid #e2b96f44;
+  border-radius:12px;padding:0.8rem 1rem;color:var(--cream);
+  font-family:'Quicksand',sans-serif;font-size:1rem;outline:none;
+  text-align:center;letter-spacing:0.08em;transition:border 0.3s;
+}
+.riddle-input:focus{border-color:var(--gold);}
+.riddle-hint{font-size:0.8rem;color:#8899aa;margin-top:0.5rem;}
+.riddle-error{color:var(--rose);font-size:0.85rem;margin-top:0.5rem;min-height:1.2rem;}
+.lock-icon{font-size:3rem;margin-bottom:1rem;display:block;}
 
-  .hero-sub {
-    font-family: 'Amiri', serif;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: #a8d5b5;
-    margin-top: 1rem;
-    opacity: 0;
-    animation: fadeUp 1s 0.8s forwards;
-  }
+/* \u2550\u2550 SCREEN 4 \u2014 SCRATCH CARDS \u2550\u2550 */
+.scratch-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;max-width:380px;width:100%;}
+.scratch-wrap{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1;}
+canvas.scratch-canvas{position:absolute;inset:0;z-index:2;cursor:crosshair;border-radius:16px;}
+.scratch-reveal{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(145deg,#111827,#0d1525);
+  border:1px solid #e2b96f22;border-radius:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:2rem;gap:0.3rem;
+}
+.scratch-reveal span{font-family:'Amiri',serif;font-size:0.7rem;color:var(--gold);text-align:center;padding:0 0.3rem;}
+.scratch-progress{font-family:'Amiri',serif;color:var(--soft);font-size:0.85rem;margin-top:0.8rem;}
 
-  .geo-divider {
-    width: 200px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.5rem auto;
-    opacity: 0;
-    animation: fadeUp 1s 1s forwards;
-  }
+/* \u2550\u2550 SCREEN 5 \u2014 MINI GAME \u2550\u2550 */
+#gameCanvas{
+  border:1px solid #e2b96f33;border-radius:16px;
+  background:#040810;display:block;margin:0.8rem auto;max-width:100%;
+}
+#gameHUD{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold2);margin-bottom:0.3rem;}
+#gameMsg{font-family:'Amiri',serif;font-size:0.9rem;color:var(--soft);min-height:1.2rem;}
+.game-btns{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:0.5rem;}
+.btn-sm{
+  background:linear-gradient(135deg,var(--gold),#b8892a);color:#0a0f1e;
+  border:none;padding:0.5rem 1.4rem;border-radius:20px;
+  font-family:'Quicksand',sans-serif;font-size:0.85rem;cursor:pointer;font-weight:700;
+  box-shadow:0 3px 12px #e2b96f33;transition:transform 0.2s;
+}
+.btn-sm:hover{transform:scale(1.05);}
 
-  .dua-box {
-    background: linear-gradient(135deg, #0d3d2e99, #071a1399);
-    border: 1px solid var(--gold);
-    border-radius: 12px;
-    padding: 1.2rem 2rem;
-    max-width: 600px;
-    font-family: 'Amiri', serif;
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    color: var(--cream);
-    line-height: 1.8;
-    margin-top: 1rem;
-    opacity: 0;
-    animation: fadeUp 1s 1.2s forwards;
-  }
+/* \u2550\u2550 SCREEN 6 \u2014 FINAL \u2550\u2550 */
+#s6{background:radial-gradient(ellipse at 50% 40%,#2d1040 0%,#0a0f1e 70%);}
+.final-flowers{display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;font-size:2.2rem;margin:1rem 0;}
+.final-flower{cursor:pointer;transition:transform 0.2s;display:inline-block;}
+.final-flower:hover{transform:scale(1.4) rotate(15deg);}
+.confetti-piece{
+  position:fixed;pointer-events:none;z-index:999;
+  width:8px;height:8px;border-radius:2px;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+.glow-text{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,5vw,2.8rem);
+  color:var(--gold2);
+  text-shadow:0 0 30px #e2b96faa,0 0 60px #e2b96f44;
+  margin-bottom:0.5rem;
+}
 
-  .dua-arabic {
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
-    color: var(--gold-light);
-    display: block;
-    margin-bottom: 0.4rem;
-  }
+/* \u2550\u2550 PROGRESS BAR \u2550\u2550 */
+.progress-bar{
+  position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--rose),var(--gold));
+  z-index:200;transition:width 0.5s ease;
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* \u2550\u2550 FLOWER BURST \u2550\u2550 */
+.fburst{
+  position:fixed;pointer-events:none;z-index:999;
+  font-size:2.5rem;
+  animation:fburstAnim 0.7s forwards;
+}
+@keyframes fburstAnim{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1;}
+  60%{transform:translate(-50%,-50%) scale(2);opacity:0.8;}
+  100%{transform:translate(-50%,-50%) scale(3);opacity:0;}
+}
 
-  .section { position: relative; z-index: 2; padding: 4rem 1.5rem; max-width: 1100px; margin: 0 auto; }
-
-  .section-heading {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .section-sub {
-    text-align: center;
-    color: #8abba0;
-    font-family: 'Amiri', serif;
-    font-size: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .wish-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .wish-card {
-    background: linear-gradient(145deg, #0d3d2e, #0a2b1e);
-    border: 1px solid #c9a84c44;
-    border-radius: 16px;
-    padding: 1.8rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    cursor: pointer;
-  }
-
-  .wish-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at top right, #c9a84c11, transparent 60%);
-    pointer-events: none;
-  }
-
-  .wish-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px #00000066, 0 0 20px #c9a84c22;
-    border-color: var(--gold);
-  }
-
-  .wish-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
-
-  .wish-card h3 {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.85rem;
-    color: var(--gold);
-    margin-bottom: 0.6rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .wish-card p {
-    font-family: 'Amiri', serif;
-    font-size: 1rem;
-    color: #c8e6d4;
-    line-height: 1.7;
-  }
-
-  .copy-btn {
-    margin-top: 1rem;
-    background: none;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    cursor: pointer;
-    font-family: 'Lato', sans-serif;
-    transition: all 0.2s;
-    letter-spacing: 0.05em;
-  }
-
-  .copy-btn:hover { background: var(--gold); color: var(--bg); }
-  .copy-btn.copied { background: #2e7d52; border-color: #2e7d52; color: white; }
-
-  .flower-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .flower-item {
-    display: flex; flex-direction: column; align-items: center;
-    font-size: 3.5rem;
-    cursor: pointer;
-    transition: transform 0.3s;
-    position: relative;
-  }
-
-  .flower-item:hover { transform: scale(1.3) rotate(10deg); }
-
-  .flower-item span {
-    font-family: 'Amiri', serif;
-    font-size: 0.75rem;
-    color: var(--gold);
-    margin-top: 0.4rem;
-    letter-spacing: 0.05em;
-  }
-
-  .flower-burst {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    font-size: 4rem;
-    animation: burst 0.5s forwards;
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  @keyframes burst {
-    0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-    60%  { transform: translate(-50%, -50%) scale(1.8); opacity: 0.8; }
-    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
-  }
-
-  .game-wrapper {
-    background: linear-gradient(145deg, #071a13, #0d3d2e88);
-    border: 1px solid var(--gold);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .game-wrapper::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent, transparent 20px,
-      #c9a84c05 20px, #c9a84c05 21px
-    );
-  }
-
-  #gameCanvas {
-    border: 1px solid #c9a84c44;
-    border-radius: 12px;
-    background: #040f09;
-    display: block;
-    margin: 1rem auto;
-    max-width: 100%;
-  }
-
-  .game-controls { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
-
-  .btn-gold {
-    background: linear-gradient(135deg, var(--gold), #8a6820);
-    color: var(--bg);
-    border: none;
-    padding: 0.7rem 2rem;
-    border-radius: 30px;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 15px #c9a84c44;
-  }
-
-  .btn-gold:hover { transform: scale(1.05); box-shadow: 0 6px 25px #c9a84c66; }
-
-  #scoreDisplay {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.1rem;
-    color: var(--gold-light);
-    margin-top: 0.5rem;
-  }
-
-  #gameMsg {
-    font-family: 'Amiri', serif;
-    font-size: 1rem;
-    color: #8abba0;
-    min-height: 1.5rem;
-    margin-top: 0.5rem;
-  }
-
-  footer {
-    position: relative; z-index: 2;
-    text-align: center;
-    padding: 2rem;
-    color: #5a8a6a;
-    font-family: 'Amiri', serif;
-    border-top: 1px solid #c9a84c22;
-  }
-
-  .star-corners { position: absolute; opacity: 0.15; pointer-events: none; }
-
-  @media (max-width: 600px) {
-    .wish-grid { grid-template-columns: 1fr; }
-    #gameCanvas { width: 320px !important; height: 400px !important; }
-  }
-
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+/* \u2550\u2550 RESPONSIVE \u2550\u2550 */
+@media(max-width:480px){
+  .scratch-grid{grid-template-columns:1fr 1fr 1fr;gap:0.6rem;max-width:300px;}
+  #gameCanvas{width:300px!important;height:360px!important;}
+  .slide-card{padding:1.5rem 1.2rem;}
+}
 </style>
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
+<canvas id="stars"></canvas>
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
 
-<section class="hero">
-  <svg class="star-corners" style="top:20px;left:20px;width:80px" viewBox="0 0 100 100">
-    <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#c9a84c"/>
-  </svg>
-  <svg class="star-corners" style="top:20px;right:20px;width:80px" viewBox="0 0 100 100">
-    <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#c9a84c"/>
-  </svg>
-
-  <div class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</div>
-  <div class="hero-title">Happy Birthday,<br/>Dear Sister 🌸</div>
-  <div class="hero-sub">May Allah shower you with His endless blessings</div>
-  <div class="geo-divider"></div>
-  <div class="dua-box">
-    <span class="dua-arabic">بَارَكَ اللّٰهُ فِيكِ</span>
-    May Allah bless you, keep you wrapped in His mercy,
-    and grant you a year filled with joy, health, and Imaan. Ameen 🤲
-  </div>
-</section>
-
-<section class="section reveal">
-  <div class="section-heading">✦ Birthday Wishes ✦</div>
-  <div class="section-sub">Click a card to copy the wish 💌</div>
-  <div class="wish-grid" id="wishGrid"></div>
-</section>
-
-<section class="section reveal">
-  <div class="section-heading">✦ A Garden For You ✦</div>
-  <div class="section-sub">Click any flower to let it bloom 🌺</div>
-  <div class="flower-row" id="flowerRow"></div>
-</section>
-
-<section class="section reveal">
-  <div class="section-heading">✦ Catch the Flowers ✦</div>
-  <div class="section-sub">Move your basket to catch the falling flowers 🎮</div>
-  <div class="game-wrapper">
-    <div id="scoreDisplay">Score: 0 &nbsp;|&nbsp; Lives: ❤️❤️❤️</div>
-    <canvas id="gameCanvas" width="480" height="460"></canvas>
-    <div id="gameMsg">Press Start to play!</div>
-    <div class="game-controls">
-      <button class="btn-gold" onclick="startGame()">▶ Start</button>
-      <button class="btn-gold" onclick="resetGame()">↺ Reset</button>
+<!-- \u2550\u2550 SCREEN 0 \u2014 ENVELOPE \u2550\u2550 -->
+<div class="screen active" id="s0">
+  <div class="s0-title">\u0628\u0650\u0633\u0652\u0645\u0650 \u0627\u0644\u0644\u0651\u0670\u0647\u0650 \u0627\u0644\u0631\u064e\u0651\u062d\u0652\u0645\u0670\u0646\u0650 \u0627\u0644\u0631\u064e\u0651\u062d\u0650\u064a\u0652\u0645</div>
+  <div class="s0-sub">Someone sent you something special...</div>
+  <div class="envelope-wrap" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="env-body">
+        <div class="env-flap"></div>
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="env-bottom"></div>
+        <div class="env-seal">\ud83c\udf38</div>
+      </div>
     </div>
-    <p style="font-size:0.8rem;color:#5a8a6a;margin-top:1rem;font-family:'Lato',sans-serif;">
-      Desktop: Arrow keys / A-D &nbsp;|&nbsp; Mobile: Tap left/right sides of canvas
-    </p>
+    <div class="tap-hint">\u2726 Tap to open \u2726</div>
   </div>
-</section>
+</div>
 
-<footer>
-  <div>وَاللّٰهُ يُحِبُّ الْمُحْسِنِيْن</div>
-  <div style="font-size:0.8rem;margin-top:0.4rem;opacity:0.6;">Made with love & du'a 🌸</div>
-</footer>
+<!-- \u2550\u2550 SCREEN 1 \u2014 INTRO SLIDE \u2550\u2550 -->
+<div class="screen" id="s1">
+  <div class="slide-card">
+    <span class="slide-icon">\ud83c\udf38</span>
+    <div class="slide-title">Happy Birthday!</div>
+    <div class="divider"></div>
+    <div class="slide-text">
+      On this beautiful day, the world is a little brighter \u2014 because you're in it.
+      May Allah fill this year with so much barakah, laughter, and love for you. \ud83e\udd0d
+    </div>
+    <span class="arabic-line">\u0628\u064e\u0627\u0631\u064e\u0643\u064e \u0627\u0644\u0644\u0651\u0670\u0647\u064f \u0641\u0650\u064a\u0643\u0650</span>
+    <button class="btn" onclick="goTo(2)">Next \u2726</button>
+  </div>
+</div>
+
+<!-- \u2550\u2550 SCREEN 2 \u2014 RIDDLE LOCK \u2550\u2550 -->
+<div class="screen" id="s2">
+  <div class="riddle-box">
+    <span class="lock-icon">\ud83d\udd12</span>
+    <div class="slide-title" style="color:var(--teal);margin-bottom:0.8rem;">Unlock the next surprise...</div>
+    <div class="riddle-q">"I have petals but no thorns, I bloom in spring, and I'm gifted with love. What am I? \ud83c\udf38"</div>
+    <input class="riddle-input" id="riddleInput" type="text" placeholder="Type your answer..." maxlength="20"/>
+    <div class="riddle-hint">Hint: It's a beautiful flower \ud83c\udf37</div>
+    <div class="riddle-error" id="riddleError"></div>
+    <button class="btn" onclick="checkRiddle()">Unlock \ud83d\udd13</button>
+  </div>
+</div>
+
+<!-- \u2550\u2550 SCREEN 3 \u2014 WISH SLIDE \u2550\u2550 -->
+<div class="screen" id="s3">
+  <div class="slide-card">
+    <span class="slide-icon">\u2728</span>
+    <div class="slide-title">A Special Du'a For You</div>
+    <div class="divider"></div>
+    <div class="slide-text" style="font-family:'Amiri',serif;">
+      <span class="arabic-line" style="font-size:1.5rem;">\u0627\u0644\u0644\u0651\u0670\u0647\u064f\u0645\u064e\u0651 \u0628\u064e\u0627\u0631\u0650\u0643\u0652 \u0644\u064e\u0647\u064e\u0627</span>
+      May Allah bless her in her youth,<br/>
+      protect her in her journey,<br/>
+      and surround her with people who truly love her.<br/>
+      May she always find peace in her heart. \ud83d\udd4a\ufe0f<br/><br/>
+      <em style="color:var(--gold);font-size:0.95rem;">\u2014 Ameen \ud83e\udd32</em>
+    </div>
+    <button class="btn" onclick="goTo(4)">Next Surprise \u2726</button>
+  </div>
+</div>
+
+<!-- \u2550\u2550 SCREEN 4 \u2014 SCRATCH CARDS \u2550\u2550 -->
+<div class="screen" id="s4">
+  <div style="max-width:420px;width:100%;">
+    <div class="slide-title" style="color:var(--rose2);margin-bottom:0.3rem;">Scratch to Reveal \ud83c\udf81</div>
+    <div style="font-family:'Amiri',serif;color:var(--soft);font-size:0.9rem;margin-bottom:1rem;">Scratch each card to unwrap your gifts!</div>
+    <div class="scratch-grid" id="scratchGrid"></div>
+    <div class="scratch-progress" id="scratchProgress">Scratch all 6 cards to continue...</div>
+    <button class="btn" id="scratchNext" style="display:none;" onclick="goTo(5)">Play a Game \u2726</button>
+  </div>
+</div>
+
+<!-- \u2550\u2550 SCREEN 5 \u2014 MINI GAME \u2550\u2550 -->
+<div class="screen" id="s5">
+  <div style="max-width:420px;width:100%;text-align:center;">
+    <div class="slide-title" style="margin-bottom:0.2rem;">Catch the Flowers \ud83c\udf38</div>
+    <div id="gameHUD">Score: 0 &nbsp;|&nbsp; Lives: \u2764\ufe0f\u2764\ufe0f\u2764\ufe0f</div>
+    <canvas id="gameCanvas" width="360" height="340"></canvas>
+    <div id="gameMsg">Press Start \u2014 catch 10 flowers to win! \ud83c\udf3a</div>
+    <div class="game-btns">
+      <button class="btn-sm" onclick="startGame()">\u25b6 Start</button>
+      <button class="btn-sm" onclick="resetGame()">\u21ba Reset</button>
+    </div>
+    <p style="font-size:0.72rem;color:#556677;margin-top:0.6rem;font-family:'Quicksand'">Arrow keys / A-D &nbsp;|&nbsp; Tap sides on mobile</p>
+  </div>
+</div>
+
+<!-- \u2550\u2550 SCREEN 6 \u2014 FINAL \u2550\u2550 -->
+<div class="screen" id="s6">
+  <div class="slide-card" style="border-color:#e2b96f88;">
+    <div class="glow-text">You're One in a Million \ud83c\udf19</div>
+    <div class="divider"></div>
+    <div class="slide-text">
+      May this birthday be the start of your most beautiful chapter yet.
+      Full of smiles, full of barakah, full of everything your heart desires. \ud83c\udf38
+    </div>
+    <span class="arabic-line" style="font-size:1.4rem;">\u062c\u064e\u0632\u064e\u0627\u0643\u0650 \u0627\u0644\u0644\u0651\u0670\u0647\u064f \u062e\u064e\u064a\u0652\u0631\u064b\u0627</span>
+    <div class="final-flowers" id="finalFlowers"></div>
+    <div style="font-family:'Amiri',serif;color:var(--soft);font-size:0.85rem;margin-top:0.5rem;">
+      Tap the flowers to bloom them \ud83c\udf3a
+    </div>
+  </div>
+</div>
+
+<!-- DOTS -->
+<div class="slide-counter" id="dotRow"></div>
 
 <script>
-const petalEmojis = ['🌸','🌺','🌼','✨','🌹','💮','🌷'];
-function spawnPetal() {
-  const el = document.createElement('div');
-  el.className = 'petal';
-  el.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-  el.style.left = Math.random() * 100 + 'vw';
-  el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
-  const dur = 6 + Math.random() * 8;
-  el.style.animationDuration = dur + 's';
-  el.style.animationDelay = -Math.random() * dur + 's';
+// \u2550\u2550 STARS \u2550\u2550
+const starsC = document.getElementById('stars');
+const sCtx = starsC.getContext('2d');
+starsC.width = window.innerWidth; starsC.height = window.innerHeight;
+for(let i=0;i<200;i++){
+  const x=Math.random()*starsC.width, y=Math.random()*starsC.height;
+  const r=Math.random()*1.2+0.2;
+  sCtx.beginPath(); sCtx.arc(x,y,r,0,Math.PI*2);
+  sCtx.fillStyle=`rgba(255,255,255,${Math.random()*0.6+0.1})`; sCtx.fill();
+}
+
+// \u2550\u2550 PETALS \u2550\u2550
+const petals=['\ud83c\udf38','\ud83c\udf3a','\ud83c\udf3c','\ud83c\udf37','\u2728','\ud83d\udcae'];
+function spawnPetal(){
+  const el=document.createElement('div'); el.className='petal';
+  el.textContent=petals[Math.floor(Math.random()*petals.length)];
+  el.style.left=Math.random()*100+'vw';
+  el.style.fontSize=(0.7+Math.random()*0.9)+'rem';
+  const dur=7+Math.random()*8;
+  el.style.animationDuration=dur+'s';
+  el.style.animationDelay=-Math.random()*dur+'s';
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), (dur + 2) * 1000);
+  setTimeout(()=>el.remove(),(dur+2)*1000);
 }
-for (let i = 0; i < 18; i++) spawnPetal();
-setInterval(spawnPetal, 1200);
+for(let i=0;i<12;i++) spawnPetal();
+setInterval(spawnPetal,1500);
 
-const bgC = document.getElementById('bgCanvas');
-const bgCtx = bgC.getContext('2d');
-function resizeBg() { bgC.width = window.innerWidth; bgC.height = document.body.scrollHeight; drawBg(); }
-function drawBg() {
-  bgCtx.clearRect(0, 0, bgC.width, bgC.height);
-  bgCtx.strokeStyle = '#c9a84c';
-  bgCtx.lineWidth = 0.5;
-  const step = 80;
-  for (let x = 0; x < bgC.width; x += step) {
-    for (let y = 0; y < bgC.height; y += step) {
-      drawStar(bgCtx, x + step/2, y + step/2, 8, step*0.38, step*0.18);
-    }
+// \u2550\u2550 SCREEN SYSTEM \u2550\u2550
+const TOTAL = 7; // s0..s6
+let current = 0;
+const screens = Array.from({length:TOTAL},(_,i)=>document.getElementById('s'+i));
+
+// Dots (s1..s6 = 6 steps)
+const dotRow = document.getElementById('dotRow');
+for(let i=0;i<6;i++){
+  const d=document.createElement('div'); d.className='dot'; dotRow.appendChild(d);
+}
+function updateDots(idx){
+  const dots=dotRow.querySelectorAll('.dot');
+  dots.forEach((d,i)=>d.classList.toggle('active',i===idx-1));
+  const pct=((idx)/6)*100;
+  document.getElementById('progressBar').style.width=Math.min(pct,100)+'%';
+}
+
+function goTo(n){
+  if(n===current) return;
+  const prev=screens[current];
+  prev.classList.add('exit');
+  setTimeout(()=>{ prev.classList.remove('active','exit'); },650);
+  current=n;
+  setTimeout(()=>{ screens[n].classList.add('active'); updateDots(n); },300);
+  if(n===6) launchConfetti();
+}
+
+// \u2550\u2550 ENVELOPE \u2550\u2550
+function openEnvelope(){
+  const seal=document.querySelector('.env-seal');
+  seal.style.transform='translate(-50%,-50%) scale(2)';
+  seal.style.opacity='0';
+  seal.style.transition='all 0.4s';
+  setTimeout(()=>goTo(1),500);
+}
+
+// \u2550\u2550 RIDDLE \u2550\u2550
+const answers=['flower','flowers','rose','roses','tulip','tulips','blossom','bloom'];
+function checkRiddle(){
+  const val=document.getElementById('riddleInput').value.trim().toLowerCase();
+  const err=document.getElementById('riddleError');
+  if(answers.includes(val)){
+    err.style.color='#4ecdc4'; err.textContent='\u2713 Correct! MashaAllah \ud83c\udf38';
+    setTimeout(()=>goTo(3),800);
+  } else {
+    err.style.color='var(--rose)';
+    err.textContent='Not quite... try again! \ud83d\udcad';
+    document.getElementById('riddleInput').style.borderColor='var(--rose)';
+    setTimeout(()=>{document.getElementById('riddleInput').style.borderColor='';},1000);
   }
 }
-function drawStar(ctx, cx, cy, pts, R, r) {
-  ctx.beginPath();
-  for (let i = 0; i < pts * 2; i++) {
-    const a = (i * Math.PI / pts) - Math.PI / 2;
-    const rad = i % 2 === 0 ? R : r;
-    ctx[i === 0 ? 'moveTo' : 'lineTo'](cx + Math.cos(a)*rad, cy + Math.sin(a)*rad);
-  }
-  ctx.closePath(); ctx.stroke();
-}
-resizeBg();
-window.addEventListener('resize', resizeBg);
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&current===2)checkRiddle();});
 
-const wishes = [
-  { icon: '🌸', title: 'Blessed Birthday', text: 'May Allah grant you the best of this dunya and the akhirah. You deserve all the beauty life has to offer. Happy Birthday, dear sister!' },
-  { icon: '🤲', title: "Allah's Mercy", text: "On this blessed day, I make du'a that Allah wraps you in His mercy, blesses your path, and fills your heart with noor. Ameen." },
-  { icon: '🌹', title: 'Like a Rose', text: 'Like a rose that blooms beautifully, may your life blossom with happiness, Imaan, and endless love. Happy Birthday! 🌹' },
-  { icon: '✨', title: 'New Chapter', text: "Each year is a new chapter written by Allah's will. May this chapter be your most beautiful yet — full of growth, gratitude, and grace." },
-  { icon: '💫', title: 'Special Sister', text: 'To a girl as bright as the stars — may Allah protect your light, keep you smiling, and give you more than you could ever wish for. Happy Birthday!' },
-  { icon: '🕊️', title: 'Peace & Joy', text: "May every morning of your new year begin with salah, peace, and purpose. May Allah's blessings rain upon you every single day. Ameen 🤍" },
+// \u2550\u2550 SCRATCH CARDS \u2550\u2550
+const scratchData=[
+  {emoji:'\ud83c\udf38',label:'Endless Smiles'},
+  {emoji:'\ud83e\udd32',label:"Allah's Mercy"},
+  {emoji:'\ud83d\udcab',label:'Good Health'},
+  {emoji:'\ud83c\udf19',label:'Inner Peace'},
+  {emoji:'\ud83c\udf81',label:'Sweet Surprises'},
+  {emoji:'\u2728',label:'Bright Future'},
 ];
+let scratchedCount=0;
 
-const grid = document.getElementById('wishGrid');
-wishes.forEach(w => {
-  const card = document.createElement('div');
-  card.className = 'wish-card';
-  card.innerHTML = `
-    <span class="wish-icon">${w.icon}</span>
-    <h3>${w.title}</h3>
-    <p>${w.text}</p>
-    <button class="copy-btn" onclick="copyWish(this, \`${w.text}\`)">Copy Wish</button>
-  `;
-  grid.appendChild(card);
-});
+function buildScratch(){
+  const grid=document.getElementById('scratchGrid');
+  scratchData.forEach((d,i)=>{
+    const wrap=document.createElement('div'); wrap.className='scratch-wrap';
+    const reveal=document.createElement('div'); reveal.className='scratch-reveal';
+    reveal.innerHTML=`<div>${d.emoji}</div><span>${d.label}</span>`;
+    const cvs=document.createElement('canvas'); cvs.className='scratch-canvas';
+    cvs.width=100; cvs.height=100;
+    const ctx=cvs.getContext('2d');
+    // fill with shiny cover
+    const g=ctx.createLinearGradient(0,0,100,100);
+    g.addColorStop(0,'#2a1f5e'); g.addColorStop(0.5,'#3d2d7a'); g.addColorStop(1,'#1a1040');
+    ctx.fillStyle=g; ctx.fillRect(0,0,100,100);
+    // star pattern
+    ctx.strokeStyle='#e2b96f44'; ctx.lineWidth=0.5;
+    for(let x=0;x<100;x+=20) for(let y=0;y<100;y+=20) miniStar(ctx,x+10,y+10,5,8,4);
+    // gift emoji
+    ctx.font='28px serif'; ctx.textAlign='center'; ctx.fillStyle='#e2b96f';
+    ctx.fillText('\ud83c\udf81',50,58);
+    ctx.font='bold 10px Quicksand,sans-serif'; ctx.fillStyle='#e2b96faa';
+    ctx.fillText('SCRATCH',50,78);
 
-function copyWish(btn, text) {
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy Wish'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-const flowers = [
-  { e: '🌸', n: 'Sakura' }, { e: '🌺', n: 'Hibiscus' }, { e: '🌹', n: 'Rose' },
-  { e: '🌼', n: 'Daisy' }, { e: '🌷', n: 'Tulip' }, { e: '💐', n: 'Bouquet' },
-  { e: '🌻', n: 'Sunflower' }, { e: '🪷', n: 'Lotus' },
-];
-const fr = document.getElementById('flowerRow');
-flowers.forEach(f => {
-  const d = document.createElement('div');
-  d.className = 'flower-item';
-  d.innerHTML = `${f.e}<span>${f.n}</span>`;
-  d.addEventListener('click', () => {
-    const b = document.createElement('div');
-    b.className = 'flower-burst';
-    b.textContent = f.e;
-    d.appendChild(b);
-    setTimeout(() => b.remove(), 600);
-  });
-  fr.appendChild(d);
-});
-
-const gc = document.getElementById('gameCanvas');
-const gCtx = gc.getContext('2d');
-const fallingEmojis = ['🌸','🌺','🌼','🌹','🌷','💮','🪷','✨'];
-let game = { running: false, score: 0, lives: 3, flowers: [], basket: { x: 200, w: 80, h: 18, speed: 7 }, raf: null, lastTime: 0, spawnTimer: 0, spawnInterval: 1200, level: 1 };
-
-function resetGame() {
-  cancelAnimationFrame(game.raf);
-  game = { running: false, score: 0, lives: 3, flowers: [], basket: { x: gc.width/2 - 40, w: 80, h: 18, speed: 7 }, raf: null, lastTime: 0, spawnTimer: 0, spawnInterval: 1200, level: 1 };
-  document.getElementById('gameMsg').textContent = 'Press Start to play!';
-  updateHUD();
-  drawIdle();
-}
-
-function startGame() {
-  if (game.running) return;
-  game.running = true;
-  document.getElementById('gameMsg').textContent = 'Catch the flowers! 🌸';
-  game.lastTime = performance.now();
-  game.raf = requestAnimationFrame(gameLoop);
-}
-
-function updateHUD() {
-  const hearts = ['❤️','❤️','❤️'].slice(0, game.lives).join('') || '💀';
-  document.getElementById('scoreDisplay').textContent = 'Score: ' + game.score + '  |  Lives: ' + (hearts || '—');
-}
-
-function spawnFlower() {
-  const emoji = fallingEmojis[Math.floor(Math.random() * fallingEmojis.length)];
-  game.flowers.push({ x: 20 + Math.random() * (gc.width - 40), y: -20, speed: 1.8 + Math.random() * 1.5 + game.level * 0.3, emoji, size: 22 + Math.random() * 10 });
-}
-
-function drawIdle() {
-  gCtx.clearRect(0, 0, gc.width, gc.height);
-  gCtx.fillStyle = '#040f09';
-  gCtx.fillRect(0, 0, gc.width, gc.height);
-  gCtx.font = '2.5rem serif';
-  gCtx.textAlign = 'center';
-  gCtx.fillText('🌸', gc.width/2, gc.height/2 - 10);
-  gCtx.font = '600 14px Lato, sans-serif';
-  gCtx.fillStyle = '#c9a84c';
-  gCtx.fillText('Press Start', gc.width/2, gc.height/2 + 30);
-  drawBasket();
-}
-
-function drawBasket() {
-  const b = game.basket;
-  const bx = b.x, by = gc.height - 40;
-  gCtx.beginPath();
-  gCtx.moveTo(bx, by);
-  gCtx.lineTo(bx + b.w, by);
-  gCtx.lineTo(bx + b.w - 8, by + b.h);
-  gCtx.lineTo(bx + 8, by + b.h);
-  gCtx.closePath();
-  const grad = gCtx.createLinearGradient(bx, by, bx, by + b.h);
-  grad.addColorStop(0, '#1a5c44');
-  grad.addColorStop(1, '#0a2b1e');
-  gCtx.fillStyle = grad;
-  gCtx.fill();
-  gCtx.strokeStyle = '#c9a84c';
-  gCtx.lineWidth = 1.5;
-  gCtx.stroke();
-  gCtx.strokeStyle = '#c9a84c44';
-  gCtx.lineWidth = 0.8;
-  for (let i = 1; i < 4; i++) {
-    const yy = by + (b.h / 4) * i;
-    gCtx.beginPath(); gCtx.moveTo(bx + i*2, yy); gCtx.lineTo(bx + b.w - i*2, yy); gCtx.stroke();
-  }
-  gCtx.beginPath();
-  gCtx.arc(bx + b.w/2, by - 5, 18, Math.PI, 0);
-  gCtx.strokeStyle = '#c9a84c';
-  gCtx.lineWidth = 2;
-  gCtx.stroke();
-}
-
-function gameLoop(ts) {
-  if (!game.running) return;
-  const dt = ts - game.lastTime;
-  game.lastTime = ts;
-  game.spawnTimer += dt;
-  if (game.spawnTimer >= game.spawnInterval) {
-    spawnFlower();
-    game.spawnTimer = 0;
-    game.spawnInterval = Math.max(500, 1200 - game.level * 80);
-  }
-  if (game.score > 0 && game.score % 10 === 0) game.level = 1 + Math.floor(game.score / 10);
-  const b = game.basket;
-  if (keys['ArrowLeft'] || keys['KeyA']) b.x = Math.max(0, b.x - b.speed);
-  if (keys['ArrowRight'] || keys['KeyD']) b.x = Math.min(gc.width - b.w, b.x + b.speed);
-  gCtx.clearRect(0, 0, gc.width, gc.height);
-  gCtx.fillStyle = '#040f09';
-  gCtx.fillRect(0, 0, gc.width, gc.height);
-  gCtx.strokeStyle = '#c9a84c0a';
-  gCtx.lineWidth = 0.5;
-  for (let gx = 0; gx < gc.width; gx += 40) {
-    gCtx.beginPath(); gCtx.moveTo(gx, 0); gCtx.lineTo(gx, gc.height); gCtx.stroke();
-  }
-  gCtx.textAlign = 'center';
-  for (let i = game.flowers.length - 1; i >= 0; i--) {
-    const f = game.flowers[i];
-    f.y += f.speed * (dt / 16);
-    gCtx.font = f.size + 'px serif';
-    gCtx.fillText(f.emoji, f.x, f.y);
-    const bBasketY = gc.height - 40;
-    if (f.y >= bBasketY && f.y <= bBasketY + b.h && f.x >= b.x && f.x <= b.x + b.w) {
-      game.flowers.splice(i, 1);
-      game.score++;
-      updateHUD();
-      continue;
-    }
-    if (f.y > gc.height + 10) {
-      game.flowers.splice(i, 1);
-      game.lives--;
-      updateHUD();
-      if (game.lives <= 0) { gameOver(); return; }
-    }
-  }
-  drawBasket();
-  game.raf = requestAnimationFrame(gameLoop);
-}
-
-function gameOver() {
-  game.running = false;
-  gCtx.fillStyle = '#040f09cc';
-  gCtx.fillRect(0, 0, gc.width, gc.height);
-  gCtx.textAlign = 'center';
-  gCtx.font = 'bold 28px serif';
-  gCtx.fillStyle = '#c9a84c';
-  gCtx.fillText('Game Over 🌸', gc.width/2, gc.height/2 - 20);
-  gCtx.font = '18px serif';
-  gCtx.fillStyle = '#a8d5b5';
-  gCtx.fillText('Score: ' + game.score, gc.width/2, gc.height/2 + 20);
-  document.getElementById('gameMsg').textContent = game.score >= 15 ? '🌟 MashaAllah! Amazing! 🌟' : 'JazakAllah Khair for playing! 🌺';
-}
-
-const keys = {};
-window.addEventListener('keydown', e => keys[e.code] = true);
-window.addEventListener('keyup',   e => keys[e.code] = false);
-
-gc.addEventListener('touchstart', e => {
-  e.preventDefault();
-  const rect = gc.getBoundingClientRect();
-  const tx = e.touches[0].clientX - rect.left;
-  if (tx < gc.width / 2) keys['ArrowLeft'] = true;
-  else keys['ArrowRight'] = true;
-}, { passive: false });
-gc.addEventListener('touchend', () => { keys['ArrowLeft'] = false; keys['ArrowRight'] = false; });
-
-drawIdle();
-
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.1 });
-revealEls.forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+    l
