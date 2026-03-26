@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday — بِسْمِ اللّٰه</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --emerald: #0d3d2e;
+    --emerald-mid: #145c44;
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --rose: #d4748a;
+    --cream: #fdf6e3;
+    --bg: #071a13;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text y='16' font-size='16'>🌸</text></svg>") 10 10, auto;
+  }
+
+  #bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.18; }
+
+  .petal { position: fixed; top: -40px; font-size: 1.4rem; animation: fall linear infinite; z-index: 1; pointer-events: none; }
+  @keyframes fall {
+    0%   { transform: translateY(-40px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 2rem;
+    background: radial-gradient(ellipse at 50% 30%, #1a5c3a55 0%, transparent 70%);
+  }
+
+  .bismillah {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    color: var(--gold-light);
+    text-shadow: 0 0 40px #c9a84c88, 0 2px 8px #000;
+    line-height: 1.2;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-sub {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: #a8d5b5;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+
+  .geo-divider {
+    width: 200px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto;
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+
+  .dua-box {
+    background: linear-gradient(135deg, #0d3d2e99, #071a1399);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.2rem 2rem;
+    max-width: 600px;
+    font-family: 'Amiri', serif;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--cream);
+    line-height: 1.8;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .dua-arabic {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { position: relative; z-index: 2; padding: 4rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .section-heading {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: #8abba0;
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .wish-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .wish-card {
+    background: linear-gradient(145deg, #0d3d2e, #0a2b1e);
+    border: 1px solid #c9a84c44;
+    border-radius: 16px;
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .wish-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at top right, #c9a84c11, transparent 60%);
+    pointer-events: none;
+  }
+
+  .wish-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px #00000066, 0 0 20px #c9a84c22;
+    border-color: var(--gold);
+  }
+
+  .wish-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+
+  .wish-card h3 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .wish-card p {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: #c8e6d4;
+    line-height: 1.7;
+  }
+
+  .copy-btn {
+    margin-top: 1rem;
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn:hover { background: var(--gold); color: var(--bg); }
+  .copy-btn.copied { background: #2e7d52; border-color: #2e7d52; color: white; }
+
+  .flower-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .flower-item {
+    display: flex; flex-direction: column; align-items: center;
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+  }
+
+  .flower-item:hover { transform: scale(1.3) rotate(10deg); }
+
+  .flower-item span {
+    font-family: 'Amiri', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .flower-burst {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 4rem;
+    animation: burst 0.5s forwards;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  @keyframes burst {
+    0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    60%  { transform: translate(-50%, -50%) scale(1.8); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+  }
+
+  .game-wrapper {
+    background: linear-gradient(145deg, #071a13, #0d3d2e88);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .game-wrapper::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 20px,
+      #c9a84c05 20px, #c9a84c05 21px
+    );
+  }
+
+  #gameCanvas {
+    border: 1px solid #c9a84c44;
+    border-radius: 12px;
+    background: #040f09;
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+  }
+
+  .game-controls { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), #8a6820);
+    color: var(--bg);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 30px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px #c9a84c44;
+  }
+
+  .btn-gold:hover { transform: scale(1.05); box-shadow: 0 6px 25px #c9a84c66; }
+
+  #scoreDisplay {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-top: 0.5rem;
+  }
+
+  #gameMsg {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: #8abba0;
+    min-height: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  footer {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    color: #5a8a6a;
+    font-family: 'Amiri', serif;
+    border-top: 1px solid #c9a84c22;
+  }
+
+  .star-corners { position: absolute; opacity: 0.15; pointer-events: none; }
+
+  @media (max-width: 600px) {
+    .wish-grid { grid-template-columns: 1fr; }
+    #gameCanvas { width: 320px !important; height: 400px !important; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<section class="hero">
+  <svg class="star-corners" style="top:20px;left:20px;width:80px" viewBox="0 0 100 100">
+    <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#c9a84c"/>
+  </svg>
+  <svg class="star-corners" style="top:20px;right:20px;width:80px" viewBox="0 0 100 100">
+    <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#c9a84c"/>
+  </svg>
+
+  <div class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</div>
+  <div class="hero-title">Happy Birthday,<br/>Dear Sister 🌸</div>
+  <div class="hero-sub">May Allah shower you with His endless blessings</div>
+  <div class="geo-divider"></div>
+  <div class="dua-box">
+    <span class="dua-arabic">بَارَكَ اللّٰهُ فِيكِ</span>
+    May Allah bless you, keep you wrapped in His mercy,
+    and grant you a year filled with joy, health, and Imaan. Ameen 🤲
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading">✦ Birthday Wishes ✦</div>
+  <div class="section-sub">Click a card to copy the wish 💌</div>
+  <div class="wish-grid" id="wishGrid"></div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading">✦ A Garden For You ✦</div>
+  <div class="section-sub">Click any flower to let it bloom 🌺</div>
+  <div class="flower-row" id="flowerRow"></div>
+</section>
+
+<section class="section reveal">
+  <div class="section-heading">✦ Catch the Flowers ✦</div>
+  <div class="section-sub">Move your basket to catch the falling flowers 🎮</div>
+  <div class="game-wrapper">
+    <div id="scoreDisplay">Score: 0 &nbsp;|&nbsp; Lives: ❤️❤️❤️</div>
+    <canvas id="gameCanvas" width="480" height="460"></canvas>
+    <div id="gameMsg">Press Start to play!</div>
+    <div class="game-controls">
+      <button class="btn-gold" onclick="startGame()">▶ Start</button>
+      <button class="btn-gold" onclick="resetGame()">↺ Reset</button>
+    </div>
+    <p style="font-size:0.8rem;color:#5a8a6a;margin-top:1rem;font-family:'Lato',sans-serif;">
+      Desktop: Arrow keys / A-D &nbsp;|&nbsp; Mobile: Tap left/right sides of canvas
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div>وَاللّٰهُ يُحِبُّ الْمُحْسِنِيْن</div>
+  <div style="font-size:0.8rem;margin-top:0.4rem;opacity:0.6;">Made with love & du'a 🌸</div>
+</footer>
+
+<script>
+const petalEmojis = ['🌸','🌺','🌼','✨','🌹','💮','🌷'];
+function spawnPetal() {
+  const el = document.createElement('div');
+  el.className = 'petal';
+  el.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+  const dur = 6 + Math.random() * 8;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay = -Math.random() * dur + 's';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), (dur + 2) * 1000);
+}
+for (let i = 0; i < 18; i++) spawnPetal();
+setInterval(spawnPetal, 1200);
+
+const bgC = document.getElementById('bgCanvas');
+const bgCtx = bgC.getContext('2d');
+function resizeBg() { bgC.width = window.innerWidth; bgC.height = document.body.scrollHeight; drawBg(); }
+function drawBg() {
+  bgCtx.clearRect(0, 0, bgC.width, bgC.height);
+  bgCtx.strokeStyle = '#c9a84c';
+  bgCtx.lineWidth = 0.5;
+  const step = 80;
+  for (let x = 0; x < bgC.width; x += step) {
+    for (let y = 0; y < bgC.height; y += step) {
+      drawStar(bgCtx, x + step/2, y + step/2, 8, step*0.38, step*0.18);
+    }
+  }
+}
+function drawStar(ctx, cx, cy, pts, R, r) {
+  ctx.beginPath();
+  for (let i = 0; i < pts * 2; i++) {
+    const a = (i * Math.PI / pts) - Math.PI / 2;
+    const rad = i % 2 === 0 ? R : r;
+    ctx[i === 0 ? 'moveTo' : 'lineTo'](cx + Math.cos(a)*rad, cy + Math.sin(a)*rad);
+  }
+  ctx.closePath(); ctx.stroke();
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
+
+const wishes = [
+  { icon: '🌸', title: 'Blessed Birthday', text: 'May Allah grant you the best of this dunya and the akhirah. You deserve all the beauty life has to offer. Happy Birthday, dear sister!' },
+  { icon: '🤲', title: "Allah's Mercy", text: "On this blessed day, I make du'a that Allah wraps you in His mercy, blesses your path, and fills your heart with noor. Ameen." },
+  { icon: '🌹', title: 'Like a Rose', text: 'Like a rose that blooms beautifully, may your life blossom with happiness, Imaan, and endless love. Happy Birthday! 🌹' },
+  { icon: '✨', title: 'New Chapter', text: "Each year is a new chapter written by Allah's will. May this chapter be your most beautiful yet — full of growth, gratitude, and grace." },
+  { icon: '💫', title: 'Special Sister', text: 'To a girl as bright as the stars — may Allah protect your light, keep you smiling, and give you more than you could ever wish for. Happy Birthday!' },
+  { icon: '🕊️', title: 'Peace & Joy', text: "May every morning of your new year begin with salah, peace, and purpose. May Allah's blessings rain upon you every single day. Ameen 🤍" },
+];
+
+const grid = document.getElementById('wishGrid');
+wishes.forEach(w => {
+  const card = document.createElement('div');
+  card.className = 'wish-card';
+  card.innerHTML = `
+    <span class="wish-icon">${w.icon}</span>
+    <h3>${w.title}</h3>
+    <p>${w.text}</p>
+    <button class="copy-btn" onclick="copyWish(this, \`${w.text}\`)">Copy Wish</button>
+  `;
+  grid.appendChild(card);
+});
+
+function copyWish(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy Wish'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+const flowers = [
+  { e: '🌸', n: 'Sakura' }, { e: '🌺', n: 'Hibiscus' }, { e: '🌹', n: 'Rose' },
+  { e: '🌼', n: 'Daisy' }, { e: '🌷', n: 'Tulip' }, { e: '💐', n: 'Bouquet' },
+  { e: '🌻', n: 'Sunflower' }, { e: '🪷', n: 'Lotus' },
+];
+const fr = document.getElementById('flowerRow');
+flowers.forEach(f => {
+  const d = document.createElement('div');
+  d.className = 'flower-item';
+  d.innerHTML = `${f.e}<span>${f.n}</span>`;
+  d.addEventListener('click', () => {
+    const b = document.createElement('div');
+    b.className = 'flower-burst';
+    b.textContent = f.e;
+    d.appendChild(b);
+    setTimeout(() => b.remove(), 600);
+  });
+  fr.appendChild(d);
+});
+
+const gc = document.getElementById('gameCanvas');
+const gCtx = gc.getContext('2d');
+const fallingEmojis = ['🌸','🌺','🌼','🌹','🌷','💮','🪷','✨'];
+let game = { running: false, score: 0, lives: 3, flowers: [], basket: { x: 200, w: 80, h: 18, speed: 7 }, raf: null, lastTime: 0, spawnTimer: 0, spawnInterval: 1200, level: 1 };
+
+function resetGame() {
+  cancelAnimationFrame(game.raf);
+  game = { running: false, score: 0, lives: 3, flowers: [], basket: { x: gc.width/2 - 40, w: 80, h: 18, speed: 7 }, raf: null, lastTime: 0, spawnTimer: 0, spawnInterval: 1200, level: 1 };
+  document.getElementById('gameMsg').textContent = 'Press Start to play!';
+  updateHUD();
+  drawIdle();
+}
+
+function startGame() {
+  if (game.running) return;
+  game.running = true;
+  document.getElementById('gameMsg').textContent = 'Catch the flowers! 🌸';
+  game.lastTime = performance.now();
+  game.raf = requestAnimationFrame(gameLoop);
+}
+
+function updateHUD() {
+  const hearts = ['❤️','❤️','❤️'].slice(0, game.lives).join('') || '💀';
+  document.getElementById('scoreDisplay').textContent = 'Score: ' + game.score + '  |  Lives: ' + (hearts || '—');
+}
+
+function spawnFlower() {
+  const emoji = fallingEmojis[Math.floor(Math.random() * fallingEmojis.length)];
+  game.flowers.push({ x: 20 + Math.random() * (gc.width - 40), y: -20, speed: 1.8 + Math.random() * 1.5 + game.level * 0.3, emoji, size: 22 + Math.random() * 10 });
+}
+
+function drawIdle() {
+  gCtx.clearRect(0, 0, gc.width, gc.height);
+  gCtx.fillStyle = '#040f09';
+  gCtx.fillRect(0, 0, gc.width, gc.height);
+  gCtx.font = '2.5rem serif';
+  gCtx.textAlign = 'center';
+  gCtx.fillText('🌸', gc.width/2, gc.height/2 - 10);
+  gCtx.font = '600 14px Lato, sans-serif';
+  gCtx.fillStyle = '#c9a84c';
+  gCtx.fillText('Press Start', gc.width/2, gc.height/2 + 30);
+  drawBasket();
+}
+
+function drawBasket() {
+  const b = game.basket;
+  const bx = b.x, by = gc.height - 40;
+  gCtx.beginPath();
+  gCtx.moveTo(bx, by);
+  gCtx.lineTo(bx + b.w, by);
+  gCtx.lineTo(bx + b.w - 8, by + b.h);
+  gCtx.lineTo(bx + 8, by + b.h);
+  gCtx.closePath();
+  const grad = gCtx.createLinearGradient(bx, by, bx, by + b.h);
+  grad.addColorStop(0, '#1a5c44');
+  grad.addColorStop(1, '#0a2b1e');
+  gCtx.fillStyle = grad;
+  gCtx.fill();
+  gCtx.strokeStyle = '#c9a84c';
+  gCtx.lineWidth = 1.5;
+  gCtx.stroke();
+  gCtx.strokeStyle = '#c9a84c44';
+  gCtx.lineWidth = 0.8;
+  for (let i = 1; i < 4; i++) {
+    const yy = by + (b.h / 4) * i;
+    gCtx.beginPath(); gCtx.moveTo(bx + i*2, yy); gCtx.lineTo(bx + b.w - i*2, yy); gCtx.stroke();
+  }
+  gCtx.beginPath();
+  gCtx.arc(bx + b.w/2, by - 5, 18, Math.PI, 0);
+  gCtx.strokeStyle = '#c9a84c';
+  gCtx.lineWidth = 2;
+  gCtx.stroke();
+}
+
+function gameLoop(ts) {
+  if (!game.running) return;
+  const dt = ts - game.lastTime;
+  game.lastTime = ts;
+  game.spawnTimer += dt;
+  if (game.spawnTimer >= game.spawnInterval) {
+    spawnFlower();
+    game.spawnTimer = 0;
+    game.spawnInterval = Math.max(500, 1200 - game.level * 80);
+  }
+  if (game.score > 0 && game.score % 10 === 0) game.level = 1 + Math.floor(game.score / 10);
+  const b = game.basket;
+  if (keys['ArrowLeft'] || keys['KeyA']) b.x = Math.max(0, b.x - b.speed);
+  if (keys['ArrowRight'] || keys['KeyD']) b.x = Math.min(gc.width - b.w, b.x + b.speed);
+  gCtx.clearRect(0, 0, gc.width, gc.height);
+  gCtx.fillStyle = '#040f09';
+  gCtx.fillRect(0, 0, gc.width, gc.height);
+  gCtx.strokeStyle = '#c9a84c0a';
+  gCtx.lineWidth = 0.5;
+  for (let gx = 0; gx < gc.width; gx += 40) {
+    gCtx.beginPath(); gCtx.moveTo(gx, 0); gCtx.lineTo(gx, gc.height); gCtx.stroke();
+  }
+  gCtx.textAlign = 'center';
+  for (let i = game.flowers.length - 1; i >= 0; i--) {
+    const f = game.flowers[i];
+    f.y += f.speed * (dt / 16);
+    gCtx.font = f.size + 'px serif';
+    gCtx.fillText(f.emoji, f.x, f.y);
+    const bBasketY = gc.height - 40;
+    if (f.y >= bBasketY && f.y <= bBasketY + b.h && f.x >= b.x && f.x <= b.x + b.w) {
+      game.flowers.splice(i, 1);
+      game.score++;
+      updateHUD();
+      continue;
+    }
+    if (f.y > gc.height + 10) {
+      game.flowers.splice(i, 1);
+      game.lives--;
+      updateHUD();
+      if (game.lives <= 0) { gameOver(); return; }
+    }
+  }
+  drawBasket();
+  game.raf = requestAnimationFrame(gameLoop);
+}
+
+function gameOver() {
+  game.running = false;
+  gCtx.fillStyle = '#040f09cc';
+  gCtx.fillRect(0, 0, gc.width, gc.height);
+  gCtx.textAlign = 'center';
+  gCtx.font = 'bold 28px serif';
+  gCtx.fillStyle = '#c9a84c';
+  gCtx.fillText('Game Over 🌸', gc.width/2, gc.height/2 - 20);
+  gCtx.font = '18px serif';
+  gCtx.fillStyle = '#a8d5b5';
+  gCtx.fillText('Score: ' + game.score, gc.width/2, gc.height/2 + 20);
+  document.getElementById('gameMsg').textContent = game.score >= 15 ? '🌟 MashaAllah! Amazing! 🌟' : 'JazakAllah Khair for playing! 🌺';
+}
+
+const keys = {};
+window.addEventListener('keydown', e => keys[e.code] = true);
+window.addEventListener('keyup',   e => keys[e.code] = false);
+
+gc.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const rect = gc.getBoundingClientRect();
+  const tx = e.touches[0].clientX - rect.left;
+  if (tx < gc.width / 2) keys['ArrowLeft'] = true;
+  else keys['ArrowRight'] = true;
+}, { passive: false });
+gc.addEventListener('touchend', () => { keys['ArrowLeft'] = false; keys['ArrowRight'] = false; });
+
+drawIdle();
+
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
